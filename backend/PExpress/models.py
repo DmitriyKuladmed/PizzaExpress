@@ -6,6 +6,7 @@ class User(AbstractBaseUser):
     id = models.BigAutoField(primary_key=True)
     nickname = models.CharField(max_length=25, unique=True)
     tg_nickname = models.CharField(max_length=50, null=True)
+    password = models.CharField(max_length=20)
 
     USERNAME_FIELD = 'nickname'
     REQUIRED_FIELDS = ['id', 'tg_nickname']
