@@ -2,14 +2,42 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
+class UserAccountManager(BaseUserManager):
+    def create_user(self, nickname, tg_nickname, password=None):
+
+        user = self.model(
+            nickname=nickname,
+            tg_nickname=tg_nickname,
+        )
+
+        user.set_password(password)
+        user.save()
+
+        return user
+
+    def create_superuser(self, nickname, tg_nickname, password=None):
+        user = self.create_user(
+            nickname,
+            tg_nickname,
+            password=password
+        )
+
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+
+        return user
+
+
 class User(AbstractBaseUser):
     id = models.BigAutoField(primary_key=True)
     nickname = models.CharField(max_length=25, unique=True)
     tg_nickname = models.CharField(max_length=50, null=True)
-    password = models.CharField(max_length=20)
+
+    objects = UserAccountManager()
 
     USERNAME_FIELD = 'nickname'
-    REQUIRED_FIELDS = ['id', 'tg_nickname']
+    REQUIRED_FIELDS = ['tg_nickname']
 
     def get_nickname(self):
         return self.nickname
@@ -27,8 +55,8 @@ class Order(models.Model):
 class Dish(models.Model):
     id = models.AutoField(primary_key=True)
     pizza_name = models.CharField(max_length=100)
-    cooking_time = models.IntegerField
-    gram = models.IntegerField
+    cooking_time = models.IntegerField(default=0)
+    gram = models.IntegerField(default=0)
     photo = models.ImageField(verbose_name="Изображение", upload_to='media/', default='media/default.jpg')
 
     def get_pizza_name(self):
