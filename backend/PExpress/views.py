@@ -4,8 +4,7 @@ from .forms import UserCreationForm
 from django.views import View
 from django.shortcuts import render, redirect
 
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login, authenticate, logout
 
 
 def logger(message):
@@ -39,8 +38,14 @@ class Register(View):
             password = form.cleaned_data.get('password1')
             user = authenticate(nickname=nickname, tg_nickname=tg_nickname, password=password)
             auth_login(request, user)
-            return redirect('register')
+            return redirect('first')
         else:
             return render(request, self.template_name, {
                 'form': form
             })
+
+
+class LogoutAndRedirect(View):
+    def get(self, request):
+        logout(request)
+        return redirect('first')

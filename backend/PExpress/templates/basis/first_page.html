@@ -6,7 +6,7 @@
             <meta name="viewport"
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>{% block title %}{% endblock %}</title>
+            <title>{% block title %}Главная{% endblock %}</title>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
             <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css"/>
         </head>
@@ -14,7 +14,7 @@
         <div class="d-flex positioned flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
               <nav id="menu" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-              <h6><a class="navbar-brand" href="#">AutoService</a></h6>
+              <h6><a class="navbar-brand" href="#">PizzaExpress</a></h6>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -23,26 +23,26 @@
         </div>
         <br>
             {% block body %}
-                <li>User: {{ user }}</li>
-                <p>To use this messenger, you must first go through authorization, or, if
-                    You don't have an account yet - register.</p>
+                <h4>Текущий пользователь: {{ user }}</h4>
+                <p>Для использования этого мессенджера необходимо сначала пройти авторизацию, либо, если
+                    у Вас еще нет аккаунта – зарегистрируйтесь.</p>
                 {% if user.is_authenticated %}
-                    <p>You are already signed in. Choose one of the actions:</p>
+                    <p>Вы уже вошли в систему. Выберите одно из действий:</p>
                     <div class="wrapper">
-                        <a href="auto_service/home" class="floating-button">Sign in</a>
-                        <a href="{% url 'logout' %}"  class="floating-button">Sign out</a>
+                        <a href="auto_service/home" class="floating-button">Войти</a>
+                        <a href="{% url 'logout_and_redirect' %}"  class="floating-button">Выйти</a>
                     </div>
                 {% else %}
                     <div class="wrapper">
-                        <a href="{% url 'register' %}" class="floating-button">Registration</a>
-
+                        <a href="{% url 'register' %}" class="floating-button">Регистрация</a>
+                        <a href="{% url 'login' %}" class="floating-button">Авторизоваться</a>
                     </div>
                 {% endif %}
             {% endblock %}
 
         <footer class="container">
             <br><br><br><br><br><br><br><br><p class="float-end">
-            <p>© 2023 AutoService, Inc. · </p>
+            <p>© 2023 PizzaExpress, Inc. · </p>
           </footer>
         </body>
 </html>

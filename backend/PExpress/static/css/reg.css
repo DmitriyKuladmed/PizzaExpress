@@ -9,18 +9,17 @@ body{
 
 .container{
 	font-family:Roboto,sans-serif;
-	  background-image:url(https://image.freepik.com/free-vector/dark-blue-blurred-background_1034-589.jpg) ;
-
-     border-style: 1px solid grey;
-     margin: 0 auto;
-     text-align: center;
-     opacity: 0.8;
-     margin-top: 67px;
-   box-shadow: 2px 5px 5px 0px #eee;
-     max-width: 500px;
-     padding-top: 10px;
-     height: 363px;
-     margin-top: 166px;
+    background-image:url(https://image.freepik.com/free-vector/dark-blue-blurred-background_1034-589.jpg) ;
+    border-style: 1px solid grey;
+    margin: 0 auto;
+    text-align: center;
+    opacity: 0.8;
+    margin-top: 67px;
+    box-shadow: 2px 5px 5px 0px #eee;
+    max-width: 500px;
+    padding-top: 10px;
+    height: 363px;
+    margin-top: 166px;
 }
 
 .lastname{
