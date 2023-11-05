@@ -1,0 +1,86 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+{% load static %}
+<!Doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link href="{% static 'css/reg.css' %}" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+    <header class="heading">Регистрация</header>
+    <hr>
+    {% if form.errors %}
+    <p>{{ form.errors.error }}</p>
+    {% endif %}
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="row ">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <label class="username">Ваш никнейм:</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="uname">
+                            {{form.nickname}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <label class="mail">TG-никнейм:</label></div>
+                    <div class="col-xs-8">
+                        <div class="email">{{form.tg_nickname}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <label class="pass">Пароль:</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="password">
+                            {{form.password1}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <label class="pass">Повторите пароль:</label>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="password">
+                            {{form.password2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="row">
+                <br><br>
+                <div class="col-sm-12">
+                    <button type="submit" class="floating-button">Зарегистрироваться</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

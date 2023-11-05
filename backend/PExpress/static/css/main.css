@@ -1,0 +1,198 @@
+h3 {
+  margin: 0;
+  padding: 10px 0;
+  color: #00539F;
+  text-align: center;
+}
+
+.container {
+  min-height: 150px;
+  min-width: 5px;
+  padding: 10px;
+}
+
+body {
+  width: 1200px;
+  padding: 0 20px 20px 20px;
+  margin: 0 auto;
+}
+
+.glow-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 40px #1E90FF inset, 0 0 0 0 #1E90FF;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  transition: .15s ease-in-out;
+}
+.glow-button:hover {
+  box-shadow: 0 0 10px 0 #00BFFF inset, 0 0 10px 4px #00BFFF;
+  color: #00BFFF;
+}
+
+a {
+    display: flex
+}
+
+.wrapper {
+    display: flex;
+}
+
+.wrapper floating-button:not(:last-child) {
+    margin-right: 20px;
+}
+
+
+h6 {
+    text-align:center;
+}
+
+.pressed-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 20px;
+  margin: 5px 5px;
+  border-radius: 18px;
+  background-image: linear-gradient(45deg, #6ab1d7 0%, #33d9de 50%, #002878 100%);
+  background-position: 100% 0;
+  background-size: 200% 200%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: white;
+  box-shadow: 0 16px 32px 0 rgba(0, 40, 120, .35);
+  transition: .5s;
+}
+.pressed-button:hover {
+  box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
+  background-position: 0 0;
+}
+
+li1 {
+    position: relative;
+    left: +255%;
+}
+
+li2 {
+    position: relative;
+    left: +260%;
+}
+
+li3 {
+    position: relative;
+    left: +265%;
+}
+
+li4 {
+    position: relative;
+    left: +365%;
+}
+
+li5 {
+    position: relative;
+    left: +370%;
+}
+
+li6 {
+    position: relative;
+    left: +375%;
+}
+
+
+/* Кнопка выпадающего списка */
+.dropbtn {
+  background-color: rgb(36, 38, 36);
+  color: white;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Выпадающее содержимое (скрыто по умолчанию) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 80px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Ссылки внутри выпадающего списка */
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Изменение цвета выпадающих ссылок при наведении курсора */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Показать выпадающее меню при наведении курсора */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Кнопка выпадающего списка с меню выбора курса добавления материала */
+#course .dropbtn {
+  background-color: #1E90FF;
+  color: white;
+  padding: 20px;
+  font-size: 50px;
+  border: none;
+}
+
+
+/* Изменение цвета выпадающих ссылок в выборе пункта меню при добавлении материала при наведении курсора */
+.dropdown-content a:hover {background-color: #6495ED;}
+
+
+.floating-button {
+  margin: 0 auto;
+  text-decoration: none;
+  display: block;
+  width: 220px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #6495ED;
+  background: black;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+.floating-button:hover {
+  background: #6495ED;
+  box-shadow: 0 15px 20px rgba(39, 187, 245, .8);
+  color: white;
+  transform: translateY(-7px);
+}
+
+.badge-primary {
+    background-color: #007bff;
+    border-radius: 50%;
+    padding: 6px 10px;
+    font-size: 12px;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+}
+
+.service-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
