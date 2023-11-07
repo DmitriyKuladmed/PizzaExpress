@@ -3,11 +3,11 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, nickname, tg_nickname, password=None):
+    def create_user(self, nickname, email, password=None):
 
         user = self.model(
             nickname=nickname,
-            tg_nickname=tg_nickname,
+            email=email,
         )
 
         user.set_password(password)
@@ -15,10 +15,10 @@ class UserAccountManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, nickname, tg_nickname, password=None):
+    def create_superuser(self, nickname, email, password=None):
         user = self.create_user(
             nickname,
-            tg_nickname,
+            email,
             password=password
         )
 
@@ -32,12 +32,12 @@ class UserAccountManager(BaseUserManager):
 class User(AbstractBaseUser):
     id = models.BigAutoField(primary_key=True)
     nickname = models.CharField(max_length=25, unique=True)
-    tg_nickname = models.CharField(max_length=50, null=True)
+    email = models.CharField(max_length=50, null=True)
 
     objects = UserAccountManager()
 
     USERNAME_FIELD = 'nickname'
-    REQUIRED_FIELDS = ['tg_nickname']
+    REQUIRED_FIELDS = ['email']
 
     def get_nickname(self):
         return self.nickname
@@ -55,9 +55,9 @@ class Order(models.Model):
 class Dish(models.Model):
     id = models.AutoField(primary_key=True)
     pizza_name = models.CharField(max_length=100)
-    cooking_time = models.IntegerField(default=0)
-    gram = models.IntegerField(default=0)
-    photo = models.ImageField(verbose_name="Изображение", upload_to='media/', default='media/default.jpg')
+    price = models.CharField(max_length=20)
+    weight = models.CharField(max_length=20)
+    photo = models.ImageField(verbose_name="Изображение", upload_to='images/', default='images/default.jpg')
 
     def get_pizza_name(self):
         return self.pizza_name

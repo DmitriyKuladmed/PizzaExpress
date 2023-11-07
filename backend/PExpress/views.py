@@ -1,10 +1,11 @@
 import json
 
-from .forms import UserCreationForm
 from django.views import View
 from django.shortcuts import render, redirect
-
 from django.contrib.auth import login as auth_login, authenticate, logout
+
+from .models import Dish
+from .forms import UserCreationForm
 
 
 def logger(message):
@@ -49,3 +50,17 @@ class LogoutAndRedirect(View):
     def get(self, request):
         logout(request)
         return redirect('first')
+
+
+def home(request):
+    return render(request, "basis/home.html")
+
+
+def menu(request):
+    pizzas = Dish.objects.all()
+    return render(request, 'basis/menu.html', {'pizzas': pizzas})
+
+
+def order(request):
+    pass
+

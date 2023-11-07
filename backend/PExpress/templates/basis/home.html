@@ -1,0 +1,20 @@
+{% extends "basis/base.html" %}
+
+{% block body %}
+    <div class="container text-center" style="background-color: lightblue; box-shadow: 0 0 5px lightblue;">
+            <h1 style="text-align: center; display: inline-block; padding: 5px;">
+                Ваш аккаунт
+            </h1><br>
+            <strong>Пользователь:</strong> {{ user }} <br>
+            <strong>Ваш телеграмм-ник:</strong> {{ user.tg_nickname }}
+            {% if user.is_superuser %}
+                <p>
+                    Вы - администратор.
+                </p>
+            {% else %}
+                <p>
+                    Вы не администратор. Вы не имеете специальных привилегий.
+                </p>
+            {% endif %}
+    </div>
+{% endblock %}
