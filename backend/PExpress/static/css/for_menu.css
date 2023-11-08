@@ -12,11 +12,23 @@ h3 {
 }
 
 .pizza-item {
-    width: 30%;
-    margin: 10px;
+    width: 27%;
+    margin: 15px;
     text-align: center;
     border: 1px solid #ccc;
     padding: 10px;
+    border-radius: 25px;
+}
+
+.special-pizza {
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.7);
+}
+
+
+.special-pizza:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.7);
+    background-color: #00BFFF;
+    color: white;
 }
 
 .container {
@@ -103,17 +115,17 @@ li3 {
 
 li4 {
     position: relative;
-    left: +365%;
+    left: +300%;
 }
 
 li5 {
     position: relative;
-    left: +370%;
+    left: +305%;
 }
 
 li6 {
     position: relative;
-    left: +375%;
+    left: +310%;
 }
 
 
@@ -209,4 +221,100 @@ li6 {
 .service-item {
     border: 1px solid #ccc;
     padding: 10px;
+}
+
+
+.floating-button-menu {
+  margin: 0 auto;
+  text-decoration: none;
+  display: block;
+  width: 220px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: black;
+  background: #f80;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1001;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.popup-content {
+    /* Add styles for the content within the popup */
+}
+
+#close-popup {
+    color: #f80;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#close-popup:hover {
+    text-decoration: underline;
+}
+
+.pizza-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.floating-button-detail {
+  margin: 0 auto;
+  text-decoration: none;
+  display: block;
+  width: 220px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #6495ED;
+  background: black;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+.floating-button-detail:hover {
+  background: #6495ED;
+  box-shadow: 0 15px 20px rgba(39, 187, 245, .8);
+  color: white;
+  transform: translateY(-7px);
 }

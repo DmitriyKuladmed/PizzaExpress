@@ -18,7 +18,7 @@ class OrderForm(serializers.ModelSerializer):
 class DishForm(serializers.ModelSerializer):
     class Meta:
         model = Dish
-        fields = ['pizza_name', 'price', 'weight', 'photo']
+        fields = ['id', 'pizza_name', 'price', 'weight', 'photo']
 
 
 class IngredientForm(serializers.ModelSerializer):

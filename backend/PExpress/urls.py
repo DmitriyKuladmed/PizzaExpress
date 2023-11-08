@@ -13,4 +13,7 @@ urlpatterns = [
     path("home/", views.home, name="home"),
     path("menu/", views.menu, name="menu"),
     path("order/", views.order, name="order"),
+    path("menu/detail/<int:pizza_id>/", views.detail, name="detail"),
+    path("add_to_order/<int:pizza_id>/", views.add_to_order, name="add_to_order")
+
 ]

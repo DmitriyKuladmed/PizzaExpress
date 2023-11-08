@@ -28,7 +28,7 @@
                 <form action="{% url 'login' %}" method="post">
                     {{ form.as_p }}
                     {% csrf_token %}
-                    <br><br><button type="submit" class="floating-button">Login</button>
+                    <br><br><button type="submit" class="floating-button">Авторизоваться</button>
                 </form>
 
                 <a href="{% url 'password_reset' %}">Забыли пароль?</a>

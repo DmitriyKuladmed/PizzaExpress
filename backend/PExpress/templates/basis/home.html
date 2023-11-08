@@ -2,19 +2,19 @@
 
 {% block body %}
     <div class="container text-center" style="background-color: lightblue; box-shadow: 0 0 5px lightblue;">
-            <h1 style="text-align: center; display: inline-block; padding: 5px;">
+            <h1 style='text-align: center; display: inline-block; padding: 5px; color: #f80;'>
                 Ваш аккаунт
             </h1><br>
-            <strong>Пользователь:</strong> {{ user }} <br>
-            <strong>Ваш телеграмм-ник:</strong> {{ user.tg_nickname }}
+            <strong style="color: #f80">Пользователь: {{ user }} </strong><br>
+            <strong style="color: #f80">Ваш Email: {{ user.email }}</strong>
             {% if user.is_superuser %}
-                <p>
+                <strong><p style="color: #f80">
                     Вы - администратор.
-                </p>
+                </p></strong>
             {% else %}
-                <p>
+                <strong><p style="color: #f80">
                     Вы не администратор. Вы не имеете специальных привилегий.
-                </p>
+                </p></strong>
             {% endif %}
     </div>
 {% endblock %}

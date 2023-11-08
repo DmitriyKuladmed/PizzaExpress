@@ -23,7 +23,7 @@ class OrderForm(forms.ModelForm):
 class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
-        fields = ['pizza_name', 'price', 'weight', 'photo']
+        fields = ['id', 'pizza_name', 'price', 'weight', 'photo']
 
 
 class IngredientForm(forms.ModelForm):
@@ -36,6 +36,14 @@ class MenuForm(forms.ModelForm):
     class Meta:
         model = Menu
         fields = ['menu_name']
+
+
+class AddDishToOrderForm(forms.Form):
+    dish = forms.ModelChoiceField(
+        queryset=Dish.objects.all(),
+        label="Select a dish to add",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
 
 
