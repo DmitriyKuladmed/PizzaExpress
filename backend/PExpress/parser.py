@@ -18,8 +18,8 @@ url = "https://dominos.by/pizza"
 
 response = requests.get(url)
 
-if not os.path.exists('images'):
-    os.makedirs('images')
+if not os.path.exists('media/images'):
+    os.makedirs('media/images')
 
 
 if response.status_code == 200:
@@ -37,7 +37,7 @@ if response.status_code == 200:
         image_response = requests.get(image_url)
 
         if image_response.status_code == 200:
-            image_filename = os.path.join('images', os.path.basename(image_url))
+            image_filename = os.path.join('media/images', os.path.basename(image_url))
             with open(image_filename, 'wb') as image_file:
                 image_file.write(image_response.content)
             insert_query = 'INSERT INTO "PExpress_dish" (pizza_name, price, weight, photo) VALUES (%s, %s, %s, %s);'

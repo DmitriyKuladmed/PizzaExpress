@@ -1,0 +1,31 @@
+{% extends 'basis/base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block body %}
+    {% if dishes %}
+        <h2>Ваш заказ:</h2>
+        <div class="row">
+            {% for dish in dishes %}
+                <div class="col-md-3 mb-4">
+                    <img src="{{ dish.photo.url }}" alt="{{ dish.pizza_name }}" width="100" height="100">
+                    <p>{{ dish.pizza_name }}</p>
+                    <p>Цена: {{ dish.price }}</p>
+                    <p>Вес: {{ dish.weight }}</p>
+                </div>
+                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Ваш заказ пуст :(.</p>
+    {% endif %}
+    <form method="post" action="{% url 'order' %}">
+        {% csrf_token %}
+
+        {{ confirmation_form.as_p }}
+
+        <button type="submit">Сделать заказ</button>
+    </form>
+{% endblock %}

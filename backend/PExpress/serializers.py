@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class OrderForm(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['courier', 'status']
+        fields = ['user_id', 'courier', 'status']
 
 
 class DishForm(serializers.ModelSerializer):

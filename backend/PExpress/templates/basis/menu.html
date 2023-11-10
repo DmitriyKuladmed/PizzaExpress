@@ -31,7 +31,7 @@
                               <h5><button class="dropbtn" style="color: #f80">Аккаунт</button></h5>
                                   <div class="dropdown-content">
                                     <a href="{% url 'home' %}">Профиль</a>
-                                    <a href="{% url 'logout' %}">Выйти</a>
+                                    <a href="{% url 'logout_and_redirect' %}">Выйти</a>
                                     <a href="{% url 'register' %}">Создать новый аккаунт</a>
                                   </div>
                             </div>
@@ -50,7 +50,7 @@
                             <button class="dropbtn" style="color: #f80"><h5>Аккаунт</h5></button>
                                 <div class="dropdown-content">
                                     <a href="{% url 'home' %}">Профиль</a>
-                                    <a href="{% url 'logout' %}">Выйти</a>
+                                    <a href="{% url 'logout_and_redirect' %}">Выйти</a>
                                     <a href="{% url 'register' %}">Создать новый аккаунт</a>
                                 </div>
                             </div>

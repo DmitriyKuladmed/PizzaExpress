@@ -64,8 +64,8 @@ class Dish(models.Model):
 
 
 class DishForOrder(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
-    dish_id = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    order_id = models.IntegerField(default=0)
+    dish_id = models.IntegerField(default=0)
 
 
 class Ingredient(models.Model):
@@ -76,8 +76,8 @@ class Ingredient(models.Model):
 
 
 class DishElement(models.Model):
-    dish_id = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    ingredient_id = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    dish_id = models.IntegerField(default=0)
+    ingredient_id = models.IntegerField(default=0)
 
 
 class Menu(models.Model):
@@ -88,10 +88,10 @@ class Menu(models.Model):
 
 
 class MenuElement(models.Model):
-    dish_id = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    menu_id = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    dish_id = models.IntegerField(default=0)
+    menu_id = models.IntegerField(default=0)
 
 
 class AdditionalIngredient(models.Model):
-    dish_for_order_id = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    dish_for_order_id = models.IntegerField(default=0)
+    ingredient = models.IntegerField(default=0)

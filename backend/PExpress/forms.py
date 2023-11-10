@@ -46,4 +46,18 @@ class AddDishToOrderForm(forms.Form):
     )
 
 
+class OrderConfirmationForm(forms.Form):
+    PAYMENT_CHOICES = [
+        ('cash', 'Наличными'),
+        ('card', 'Картой'),
+    ]
+
+    payment_method = forms.ChoiceField(
+        label='Способ оплаты',  # Change the label here
+        choices=PAYMENT_CHOICES,
+        widget=forms.RadioSelect
+    )
+
+
+
 

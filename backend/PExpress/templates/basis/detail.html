@@ -6,6 +6,6 @@
         <h1>{{ pizza.pizza_name }}</h1>
         <h5>Цена: {{ pizza.price }}</h5>
         <h5>Вес: {{ pizza.weight }}</h5>
-        <br><a href="{% url 'add_to_order' %}" class="floating-button-detail">Добавить в заказ</a>
+        <br><a href="{% url 'add_to_order' pizza.id %}" class="floating-button-detail">Добавить в заказ</a>
     </div>
 {% endblock %}
