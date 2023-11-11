@@ -69,6 +69,7 @@ class DishForOrder(models.Model):
 
 
 class Ingredient(models.Model):
+    dish_id = models.IntegerField(default=0)
     ingredient_name = models.CharField(max_length=60)
 
     def get_ingredient_name(self):

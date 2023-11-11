@@ -53,7 +53,7 @@ class OrderConfirmationForm(forms.Form):
     ]
 
     payment_method = forms.ChoiceField(
-        label='Способ оплаты',  # Change the label here
+        label='',
         choices=PAYMENT_CHOICES,
         widget=forms.RadioSelect
     )

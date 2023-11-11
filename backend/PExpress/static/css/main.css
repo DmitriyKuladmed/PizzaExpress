@@ -210,3 +210,29 @@ li6 {
     border: 1px solid #ccc;
     padding: 10px;
 }
+
+.floating-button-success {
+  margin: 0 auto;
+  text-decoration: none;
+  display: block;
+  width: 190px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #6495ED;
+  background: black;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+.floating-button-success:hover {
+  background: #6495ED;
+  box-shadow: 0 15px 20px rgba(39, 187, 245, .8);
+  color: white;
+  transform: translateY(-7px);
+}
