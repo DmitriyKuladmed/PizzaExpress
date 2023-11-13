@@ -28,5 +28,18 @@ app.conf.beat_schedule = {
     },
 }
 
-# Use UTC timezone for Celery Beat
 app.conf.timezone = 'UTC'
+
+app.conf.task_queues = {
+    'email_queue': {'exchange': 'email_queue'},
+    'processing_status_queue': {'exchange': 'processing_status_queue'},
+    'courier_status_queue': {'exchange': 'courier_status_queue'},
+    'expectation_status_queue': {'exchange': 'expectation_status_queue'},
+}
+
+app.conf.task_routes = {
+    'tasks.send_order_confirmation_email': {'queue': 'email_queue'},
+    'tasks.update_order_status': {'queue': 'processing_status_queue'},
+    'tasks.assign_courier_and_update_status': {'queue': 'courier_status_queue'},
+    'tasks.update_order_status_on_delivery': {'queue': 'expectation_status_queue'},
+}

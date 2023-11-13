@@ -33,7 +33,6 @@ if response.status_code == 200:
 
         image_response = requests.get(image_url)
 
-        # Adjust pizza_name based on exceptions
         if "Кинг Кебабnew" in pizza_name:
             pizza_name = "Кинг Кебаб"
         elif "4 Сезонахит" in pizza_name:
@@ -61,7 +60,6 @@ if response.status_code == 200:
         else:
             print(f"Failed to download image for pizza: {pizza_name}")
 
-        # Select the dish from "Dish" table
         select_dish_query = 'SELECT id FROM "PExpress_dish" WHERE pizza_name = %s;'
         cur.execute(select_dish_query, (pizza_name,))
         dish_id = cur.fetchone()

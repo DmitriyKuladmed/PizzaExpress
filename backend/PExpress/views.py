@@ -51,7 +51,8 @@ class Register(View):
 
 
 class LogoutAndRedirect(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         logout(request)
         return redirect('first')
 
@@ -60,7 +61,6 @@ def home(request):
     if request.user.is_authenticated:
         user_orders = []
 
-        # Fetch orders only if there are associated dish records
         for order in Order.objects.filter(user_id=request.user):
             dish_names = get_dish_names_for_order(order.id)
             if dish_names:
@@ -69,7 +69,6 @@ def home(request):
 
         return render(request, 'basis/home.html', {'user_orders': user_orders, 'user': request.user})
     else:
-        # Handle the case when the user is not authenticated
         return render(request, 'basis/first_login.html')
 
 
@@ -78,7 +77,6 @@ def get_dish_names_for_order(order_id):
         dish_for_order_items = DishForOrder.objects.filter(order_id=order_id)
         dish_ids = [item.dish_id for item in dish_for_order_items]
 
-        # Only fetch dishes if there are associated dish_for_order records
         if dish_ids:
             dishes = Dish.objects.filter(id__in=dish_ids)
             return [dish.pizza_name for dish in dishes]
@@ -118,7 +116,7 @@ def remove(request, order_id):
 class OrderView(View):
     template_name = 'basis/order.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         if not request.user.is_authenticated:
             return redirect('login')
 
@@ -132,9 +130,15 @@ class OrderView(View):
 
                 payment_form = OrderConfirmationForm()
 
-                return render(request, self.template_name, {'order_data': {'dishes': dishes, 'order_id': order_id}, 'payment_form': payment_form})
+                return render(request, self.template_name, {
+                    'order_data': {'dishes': dishes, 'order_id': order_id},
+                    'payment_form': payment_form
+                })
             else:
-                return render(request, self.template_name, {'order_data': None, 'payment_form': OrderConfirmationForm()})
+                return render(request, self.template_name, {
+                    'order_data': None,
+                    'payment_form': OrderConfirmationForm()
+                })
         except Order.DoesNotExist:
             return redirect('error')
         except Exception as e:
@@ -143,22 +147,24 @@ class OrderView(View):
 
 
 class CreateOrderView(View):
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request):
         if not request.user.is_authenticated:
             return redirect('login')
 
         try:
-            max_order_id = Order.objects.filter(user_id=request.user, status="Подтверждение заказа").aggregate(Max('id'))['id__max']
+            max_order_id = Order.objects.filter(
+                user_id=request.user,
+                status="Подтверждение заказа"
+            ).aggregate(Max('id'))['id__max']
 
             with transaction.atomic():
                 order = Order.objects.select_for_update().get(id=max_order_id)
                 order.status = "В процессе приготовления"
                 order.save()
 
-            # Create a new order for the user with the status "Подтверждение заказа"
-            new_order = Order.objects.create(user_id=request.user, status="Подтверждение заказа")
+            Order.objects.create(user_id=request.user, status="Подтверждение заказа")
 
-            # Retrieve order details
             order_items = DishForOrder.objects.filter(order_id=max_order_id)
             dishes = Dish.objects.filter(id__in=[item.dish_id for item in order_items])
             dish_names = [dish.pizza_name for dish in dishes]

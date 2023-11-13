@@ -20,7 +20,7 @@ couriers = [
 ]
 
 
-@app.task
+@app.task(queue='email_queue')
 def send_order_confirmation_email(user_email, order_details, payment_method):
     if payment_method == "cash":
         payment_method = "Наличными курьеру"
@@ -34,7 +34,7 @@ def send_order_confirmation_email(user_email, order_details, payment_method):
     send_mail(subject, plain_message, from_email, [user_email])
 
 
-@app.task
+@app.task(queue='processing_status_queue')
 def update_order_status():
     try:
         orders = Order.objects.filter(status="В процессе приготовления")
@@ -49,7 +49,7 @@ def update_order_status():
         print(f'Error updating order status: {e}')
 
 
-@app.task
+@app.task(queue='processing_status_queue')
 def update_order_status_delayed(order_id):
     try:
         with transaction.atomic():
@@ -65,7 +65,7 @@ def update_order_status_delayed(order_id):
         print(f'Error updating order status: {e}')
 
 
-@app.task
+@app.task(queue='courier_status_queue')
 def assign_courier_and_update_status():
     try:
         orders = Order.objects.filter(status="Поиск курьера для доставки")
@@ -80,7 +80,7 @@ def assign_courier_and_update_status():
         print(f'Error updating order status: {e}')
 
 
-@app.task
+@app.task(queue='courier_status_queue')
 def update_order_status_on_success_delayed(order_id):
     try:
         with transaction.atomic():
@@ -99,7 +99,7 @@ def update_order_status_on_success_delayed(order_id):
         print(f'Error updating order status: {e}')
 
 
-@app.task
+@app.task(queue='expectation_status_queue')
 def update_order_status_on_delivery():
     try:
         orders = Order.objects.filter(status="Ваш заказ доставляется")
@@ -114,7 +114,7 @@ def update_order_status_on_delivery():
         print(f'Error updating order status on delivery: {e}')
 
 
-@app.task
+@app.task(queue='expectation_status_queue')
 def update_order_status_on_delivery_delayed(order_id):
     try:
         with transaction.atomic():
