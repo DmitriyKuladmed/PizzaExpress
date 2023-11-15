@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 
 from backend.celery import app
 from .models import Order
+import backend.settings as settings
+
 
 couriers = [
     "Алексей Дмитровской",
