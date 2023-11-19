@@ -1,8 +1,9 @@
-from datetime import timedelta
-import random
-
 import celery
 import os
+import random
+
+from datetime import timedelta
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 
@@ -10,21 +11,23 @@ app = celery.Celery('PExpress')
 
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
+
 app.autodiscover_tasks()
+
 
 app.conf.beat_schedule = {
     'update-order-status': {
         'task': 'PExpress.tasks.update_order_status',
-        'schedule': timedelta(seconds=30),
+        'schedule': timedelta(seconds=15),
     },
     'assign-courier-task': {
         'task': 'PExpress.tasks.assign_courier_and_update_status',
-        'schedule': timedelta(minutes=1),
+        'schedule': timedelta(seconds=20),
         'options': {'countdown': random.randint(30, 50)},
     },
     'update-order-status-on-delivery': {
         'task': 'PExpress.tasks.update_order_status_on_delivery',
-        'schedule': timedelta(minutes=1),
+        'schedule': timedelta(seconds=20),
         'options': {'countdown': random.randint(30, 50)},
     },
 }
@@ -33,6 +36,7 @@ app.conf.timezone = 'UTC'
 
 app.conf.task_queues = {
     'email_queue': {'exchange': 'email_queue'},
+    'promo_queue': {'exchange': 'promo_queue'},
     'processing_status_queue': {'exchange': 'processing_status_queue'},
     'courier_status_queue': {'exchange': 'courier_status_queue'},
     'expectation_status_queue': {'exchange': 'expectation_status_queue'},
@@ -44,3 +48,4 @@ app.conf.task_routes = {
     'tasks.assign_courier_and_update_status': {'queue': 'courier_status_queue'},
     'tasks.update_order_status_on_delivery': {'queue': 'expectation_status_queue'},
 }
+

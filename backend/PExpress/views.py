@@ -7,9 +7,12 @@ from django.db.models import Max
 from django.db import transaction
 from django.contrib.auth import login as auth_login, authenticate, logout
 
-from .models import Dish, Order, DishForOrder, Ingredient
+from notifiers import get_notifier
+
+from .models import Dish, Order, DishForOrder, Ingredient, TelegramUsers, User
 from .forms import UserCreationForm, OrderConfirmationForm
 from .tasks import send_order_confirmation_email
+from .auth_data import token
 
 
 def logger(message):
@@ -100,12 +103,34 @@ def menu(request):
     return render(request, 'basis/menu.html', {'pizzas': pizzas})
 
 
+@transaction.atomic
 def remove(request, order_id):
     try:
         order_id = order_id
         order = Order.objects.get(id=order_id)
         order.status = 'Заказ выполнен✓'
         order.save()
+
+        # Получаем пользователя с заказом в статусе "В процессе приготовления"
+        user = User.objects.select_for_update().get(order__id=order_id, order__status="Заказ выполнен✓")
+
+        # Получаем Telegram ID пользователя
+        user_telegram_id = user.telegram_id
+
+        # Получаем user_id из таблицы TelegramUsers по telegram_id
+        try:
+            telegram_user = TelegramUsers.objects.get(user_telegram=user_telegram_id)
+            user_id = telegram_user.user_id
+        except TelegramUsers.DoesNotExist:
+            print(f'Пользователя с таким user_telegram_id не существует: {user_telegram_id}')
+
+        # Отправляем уведомление
+        success_mes = f'Статус заказа изменен на: "Заказ выполнен✓"\nПриятного аппетита :)'
+
+        telegram = get_notifier('telegram')
+        telegram.notify(token=token, chat_id=user_id, message=success_mes)
+
+        print(success_mes)
 
         return redirect('home')
     except Exception as e:
@@ -172,7 +197,7 @@ class CreateOrderView(View):
             payment_method = request.POST.get('payment_method')
 
             # Send confirmation email
-            send_order_confirmation_email.delay(request.user.email, dish_names, payment_method)
+            send_order_confirmation_email.delay(request.user.telegram_id, request.user.email, dish_names, payment_method)
 
             return redirect('menu')
         except Order.DoesNotExist:

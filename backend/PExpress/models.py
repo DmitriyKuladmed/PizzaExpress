@@ -33,6 +33,8 @@ class User(AbstractBaseUser):
     id = models.BigAutoField(primary_key=True)
     nickname = models.CharField(max_length=25, unique=True)
     email = models.CharField(max_length=50, null=True)
+    promo = models.CharField(max_length=6, null=True)
+    telegram_id = models.CharField(max_length=50, null=True)
 
     objects = UserAccountManager()
 
@@ -50,6 +52,15 @@ class Order(models.Model):
 
     def get_status(self):
         return self.status
+
+
+class Promo(models.Model):
+    promo_name = models.CharField(max_length=6)
+
+
+class TelegramUsers(models.Model):
+    user_id = models.CharField(max_length=100)
+    user_telegram = models.CharField(max_length=50, null=True)
 
 
 class Dish(models.Model):

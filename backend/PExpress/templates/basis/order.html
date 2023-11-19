@@ -30,6 +30,19 @@
                     {{ payment_form.payment_method.1 }}
                     <label class="form-check-label"></label>
                 </div><br><br>
+
+                <div class="hystmodal" id="myModal" aria-hidden="true" >
+                    <div class="hystmodal__wrap">
+                        <div class="hystmodal__window" role="dialog" aria-modal="true" >
+                            <button data-hystclose class="hystmodal__close">Close</button>
+                            <h1>Заголовок модального окна</h1>
+                            <p>Текст модального окна ...</p>
+                            <img src="img/photo.jpg" alt="Изображение" width="400" />
+                            <p>Ещё текст модального окна ...</p>
+                        </div>
+                    </div>
+                </div>
+
                 <button class="floating-button-success" type="submit">Сделать заказ</button>
                 <style>
                     .floating-button-success {
