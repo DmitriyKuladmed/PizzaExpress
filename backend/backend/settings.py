@@ -25,8 +25,11 @@ SECRET_KEY = 'django-insecure-t*q5ca^!bd14#27lat^kvg=xeatb^-6*ydcp!7gy*797*74**p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.ngrok-free.app', 'localhost', '127.0.0.1']
 AUTH_USER_MODEL = "PExpress.User"
+
+
+APPEND_SLASH = False
 
 # Application definition
 
@@ -39,10 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'PExpress',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,6 +89,22 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "https://6381-178-120-14-73.ngrok-free.app",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://6381-178-120-14-73.ngrok-free.app",
+]
+
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SECURE = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

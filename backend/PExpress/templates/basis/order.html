@@ -4,6 +4,7 @@
 
 {% block body %}
     {% if order_data.dishes %}
+
         <h3 class="text-center" style="color: #f80">Ваш заказ:</h3><br>
         <div class="row justify-content-center">
             {% for dish in order_data.dishes %}
@@ -18,6 +19,17 @@
                 {% endif %}
             {% endfor %}
         </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="form-group text-center">
+                        <label for="promo_code" style="display: inline-block; margin-right: 5px;">Ваш промокод:</label>
+                        <input type="text" class="form-control" id="promo_code" name="promo_code" style="width: 10em; display: inline-block;">
+                        <a href="" class="double-border-button">Использовать!</a>
+                    </div>
+                </div>
+            </div>
+
         <div class="text-center">
             <h3 style="color: #f80">Выберите способ оплаты:</h3>
             <form method="post" action="{% url 'create_order' %}" class="d-inline-block">
@@ -30,18 +42,6 @@
                     {{ payment_form.payment_method.1 }}
                     <label class="form-check-label"></label>
                 </div><br><br>
-
-                <div class="hystmodal" id="myModal" aria-hidden="true" >
-                    <div class="hystmodal__wrap">
-                        <div class="hystmodal__window" role="dialog" aria-modal="true" >
-                            <button data-hystclose class="hystmodal__close">Close</button>
-                            <h1>Заголовок модального окна</h1>
-                            <p>Текст модального окна ...</p>
-                            <img src="img/photo.jpg" alt="Изображение" width="400" />
-                            <p>Ещё текст модального окна ...</p>
-                        </div>
-                    </div>
-                </div>
 
                 <button class="floating-button-success" type="submit">Сделать заказ</button>
                 <style>

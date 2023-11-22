@@ -22,6 +22,7 @@ urlpatterns = [
     path('create_order/', views.CreateOrderView.as_view(), name='create_order'),
     path("add_to_order/<int:pizza_id>/", views.add_to_order, name="add_to_order"),
     path('logout-and-redirect/', views.LogoutAndRedirect.as_view(), name='logout_and_redirect'),
+    path("call/<int:number>/", views.call, name="call"),
 
 ]
 

@@ -22,12 +22,12 @@ app.conf.beat_schedule = {
     },
     'assign-courier-task': {
         'task': 'PExpress.tasks.assign_courier_and_update_status',
-        'schedule': timedelta(seconds=20),
+        'schedule': timedelta(minutes=1),
         'options': {'countdown': random.randint(30, 50)},
     },
     'update-order-status-on-delivery': {
         'task': 'PExpress.tasks.update_order_status_on_delivery',
-        'schedule': timedelta(seconds=20),
+        'schedule': timedelta(minutes=1),
         'options': {'countdown': random.randint(30, 50)},
     },
 }

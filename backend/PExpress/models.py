@@ -35,6 +35,7 @@ class User(AbstractBaseUser):
     email = models.CharField(max_length=50, null=True)
     promo = models.CharField(max_length=6, null=True)
     telegram_id = models.CharField(max_length=50, null=True)
+    phone = models.CharField(max_length=15, null=True)
 
     objects = UserAccountManager()
 

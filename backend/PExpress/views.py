@@ -1,4 +1,7 @@
 import json
+import time
+
+import requests
 
 from django.http import JsonResponse
 from django.views import View
@@ -6,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Max
 from django.db import transaction
 from django.contrib.auth import login as auth_login, authenticate, logout
+from django.views.decorators.csrf import csrf_exempt
 
 from notifiers import get_notifier
 
@@ -177,6 +181,21 @@ class CreateOrderView(View):
         if not request.user.is_authenticated:
             return redirect('login')
 
+        url = "https://zvonok.com/manager/cabapi_external/api/v1/phones/call/"
+        params = {
+            "public_key": "25ac15841d365a56bc393cb5239e0483",
+            "phone": request.user.phone,
+            "campaign_id": "1057814085",
+        }
+
+        try:
+            response = requests.get(url, params=params)
+            print(response)
+        except Exception as e:
+            print(e)
+
+        time.sleep(25)
+
         try:
             max_order_id = Order.objects.filter(
                 user_id=request.user,
@@ -205,6 +224,14 @@ class CreateOrderView(View):
         except Exception as e:
             print(f"Error creating order: {e}")
             return redirect('error')
+
+
+@csrf_exempt
+def call(request, number):
+    if number == 1:
+        return JsonResponse({"result": "1", "response_status": "200"})
+    else:
+        return JsonResponse({"result": "2", "response_status": "200"})
 
 
 def error(request):

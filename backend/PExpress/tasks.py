@@ -59,7 +59,8 @@ def give_promo(user_telegram, chat_with_user_id):
 
         user.promo = random_promo.promo_name
         user.save()
-        success_mes = f"Промокод {user.promo} добавлен к пользователю {user_telegram}"
+        success_mes = f"Вам выдан промокод {user.promo} на второй заказ!\n" \
+                      f"Введите его при следующем заказе и получите 50% скидки!\n"
 
         telegram = get_notifier('telegram')
         telegram.notify(token=token, chat_id=chat_with_user_id, message=success_mes)
@@ -117,7 +118,7 @@ def update_order_status_delayed(order_id):
         print(f'Error updating order status: {e}')
 
 
-@app.task(queue='courier_status_queue')
+@app.task(queue='courier_status_queue', max_retries=1)
 def assign_courier_and_update_status():
     try:
         orders = Order.objects.filter(status="Поиск курьера для доставки")
@@ -132,12 +133,12 @@ def assign_courier_and_update_status():
         print(f'Error updating order status: {e}')
 
 
-@app.task(queue='courier_status_queue')
+@app.task(queue='courier_status_queue', max_retries=1)
 def update_order_status_on_success_delayed(order_id):
     try:
         with transaction.atomic():
             # Получаем заказ
-            order = Order.objects.select_for_update().get(id=order_id)
+            order = Order.objects.get(id=order_id)
 
             # Выбираем случайного курьера (предполагается, что у вас есть список `couriers`)
             random_courier = random.choice(couriers)
@@ -148,7 +149,7 @@ def update_order_status_on_success_delayed(order_id):
             order.save()
 
             # Получаем пользователя с заказом в статусе "В процессе приготовления"
-            user = User.objects.select_for_update().get(order__id=order_id, order__status="Ваш заказ доставляется")
+            user = User.objects.get(order__id=order_id, order__status="Ваш заказ доставляется")
 
             # Получаем Telegram ID пользователя
             user_telegram_id = user.telegram_id
@@ -174,7 +175,7 @@ def update_order_status_on_success_delayed(order_id):
         print(f'Error updating order status: {e}')
 
 
-@app.task(queue='expectation_status_queue')
+@app.task(queue='expectation_status_queue', max_retries=1)
 def update_order_status_on_delivery():
     try:
         orders = Order.objects.filter(status="Ваш заказ доставляется")
@@ -189,16 +190,16 @@ def update_order_status_on_delivery():
         print(f'Error updating order status on delivery: {e}')
 
 
-@app.task(queue='expectation_status_queue')
+@app.task(queue='expectation_status_queue', max_retries=1)
 def update_order_status_on_delivery_delayed(order_id):
     try:
         with transaction.atomic():
-            order = Order.objects.select_for_update().get(id=order_id)
+            order = Order.objects.get(id=order_id)
             order.status = "Курьер на месте!"
             order.save()
 
             # Получаем пользователя с заказом в статусе "В процессе приготовления"
-            user = User.objects.select_for_update().get(order__id=order_id, order__status="Курьер на месте!")
+            user = User.objects.get(order__id=order_id, order__status="Курьер на месте!")
 
             # Получаем Telegram ID пользователя
             user_telegram_id = user.telegram_id
