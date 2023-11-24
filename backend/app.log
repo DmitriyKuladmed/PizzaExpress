@@ -1,0 +1,7 @@
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}

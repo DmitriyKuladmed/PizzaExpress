@@ -20,7 +20,7 @@ from .auth_data import token
 
 
 def logger(message):
-    with open('logs/app.log', 'a') as f:
+    with open('./app.log', 'a') as f:
         f.write(json.dumps(message) + '\n')
 
 
@@ -37,7 +37,7 @@ class Register(View):
         except Exception as e:
             message = {
                 'status': 400,
-                'message': f"Во время регистрации произошла ошибка. {str(e)}"
+                'message': f"An error occurred during registration. {str(e)}"
             }
             logger(message)
 
@@ -50,8 +50,20 @@ class Register(View):
             password = form.cleaned_data.get('password1')
             user = authenticate(nickname=nickname, email=email, password=password)
             auth_login(request, user)
+
+            message = {
+                'status': 200,
+                'message': f"Registration for user {nickname} was successful.",
+            }
+            logger(message)
+
             return redirect('first')
         else:
+            message = {
+                'status': 400,
+                'message': f"Error during registration.",
+            }
+            logger(message)
             return render(request, self.template_name, {
                 'form': form
             })
@@ -61,6 +73,13 @@ class LogoutAndRedirect(View):
     @staticmethod
     def get(request):
         logout(request)
+
+        message = {
+            'status': 200,
+            'message': f"The user has logged out.",
+        }
+        logger(message)
+
         return redirect('first')
 
 
@@ -116,13 +135,10 @@ def remove(request, order_id):
         order.status = 'Заказ выполнен✓'
         order.save()
 
-        # Получаем пользователя с заказом в статусе "В процессе приготовления"
         user = User.objects.select_for_update().get(order__id=order_id, order__status="Заказ выполнен✓")
 
-        # Получаем Telegram ID пользователя
         user_telegram_id = user.telegram_id
 
-        # Получаем user_id из таблицы TelegramUsers по telegram_id
         try:
             telegram_user = TelegramUsers.objects.get(user_telegram=user_telegram_id)
             user_id = telegram_user.user_id
@@ -135,8 +151,21 @@ def remove(request, order_id):
         telegram = get_notifier('telegram')
         telegram.notify(token=token, chat_id=user_id, message=success_mes)
 
+        message = {
+            'status': 200,
+            'message': f"Order for user {user.nickname} completed!",
+        }
+        logger(message)
+
         return redirect('home')
     except Exception as e:
+
+        message = {
+            'status': 400,
+            'message': f"Error completing order.",
+        }
+        logger(message)
+
         print(f"Error removing pizzas: {e}")
         return JsonResponse({'success': False})
 
@@ -286,8 +315,21 @@ class CreateOrderView(View):
                 send_order_confirmation_email.delay(request.user.telegram_id, request.user.email, dish_names,
                                                     payment_method)
 
+                message = {
+                    'status': 200,
+                    'message': f"User {request.user.nickname} made his order!",
+                }
+                logger(message)
+
                 return redirect('menu')
             else:
+
+                message = {
+                    'status': 300,
+                    'message': f"User {request.user.nickname} canceled his order!",
+                }
+                logger(message)
+
                 return redirect('menu')
         except Order.DoesNotExist:
             return redirect('error')
@@ -299,13 +341,20 @@ class CreateOrderView(View):
 @csrf_exempt
 def call(request, number):
     if number == 1:
+        message = {
+            'status': 200,
+            'message': f"User {request.user.nickname} confirmed his order when he called!",
+        }
+        logger(message)
         return JsonResponse({"result": "1", "response_status": "200"})
     else:
+
+        message = {
+            'status': 300,
+            'message': f"User {request.user.nickname} canceled his order when calling!",
+        }
+        logger(message)
         return JsonResponse({"result": "2", "response_status": "200"})
-
-
-def error(request):
-    return render(request, 'basis/error.html')
 
 
 def add_promo(request):
@@ -346,6 +395,12 @@ def add_promo(request):
                 }
                 pizza_list.append(pizza_data)
 
+            message = {
+                'status': 200,
+                'message': f"User {request.user.nickname} used their promo code!",
+            }
+            logger(message)
+
             return render(request, 'basis/order.html', {
                 'data_with_promo': {
                     'pizzas': pizza_list,
@@ -355,9 +410,14 @@ def add_promo(request):
                 'payment_form': payment_form
             })
         else:
-            pass
 
-        return redirect("order")
+            message = {
+                'status': 400,
+                'message': f"The user {request.user.nickname} entered the wrong promotional code or has already received it!",
+            }
+            logger(message)
+
+            return redirect("order")
 
 
 def add_to_order(request, pizza_id):
@@ -384,8 +444,26 @@ def add_to_order(request, pizza_id):
     try:
         create_dish_for_order = DishForOrder(order_id=order_id, dish_id=pizza_id)
         create_dish_for_order.save()
+
+        message = {
+            'status': 200,
+            'message': f"User {request.user.nickname} added a new pizza to the order!",
+        }
+        logger(message)
+
     except Exception as e:
+
+        message = {
+            'status': 400,
+            'message': f"User {request.user.nickname} failed to add pizza to order!",
+        }
+        logger(message)
+
         print(f"Error adding dish to order: {e}")
         return redirect('basis/error.html')
 
     return redirect('menu')
+
+
+def error(request):
+    return render(request, 'basis/error.html')
