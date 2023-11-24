@@ -36,6 +36,7 @@ class User(AbstractBaseUser):
     promo = models.CharField(max_length=6, null=True)
     telegram_id = models.CharField(max_length=50, null=True)
     phone = models.CharField(max_length=15, null=True)
+    total_promocodes = models.IntegerField(default=0)
 
     objects = UserAccountManager()
 
@@ -50,6 +51,8 @@ class Order(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     courier = models.CharField(max_length=60, default=None, null=True)
     status = models.CharField(max_length=60, default="Подтвердите заказ")
+    promocode = models.CharField(max_length=6, null=True)
+    total_sum = models.FloatField(null=True)
 
     def get_status(self):
         return self.status
@@ -67,7 +70,7 @@ class TelegramUsers(models.Model):
 class Dish(models.Model):
     id = models.AutoField(primary_key=True)
     pizza_name = models.CharField(max_length=100)
-    price = models.CharField(max_length=20)
+    price = models.FloatField(default=0)
     weight = models.CharField(max_length=20)
     photo = models.ImageField(verbose_name="Изображение", upload_to='images/', default='images/default.jpg')
 

@@ -5,7 +5,6 @@ from .models import Order, User
 
 @receiver(post_save, sender=User)
 def create_order_on_user_registration(sender, instance, created, **kwargs):
-    print("Signal triggered!")
     if created:
         print(f"Order creation signal triggered for user {instance.nickname}")
         try:

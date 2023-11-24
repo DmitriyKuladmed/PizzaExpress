@@ -54,7 +54,8 @@ def send_order_confirmation_email(user_telegram, user_email, order_details, paym
 def give_promo(user_telegram, chat_with_user_id):
     user = User.objects.get(telegram_id=user_telegram)
 
-    if not user.promo:
+    if not user.promo and user.total_promocodes == 0:
+        print('User promo:', user.promo, 'Promo: ', user.total_promocodes)
         random_promo = Promo.objects.order_by('?').first()
 
         user.promo = random_promo.promo_name

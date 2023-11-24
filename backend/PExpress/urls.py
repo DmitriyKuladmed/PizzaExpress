@@ -23,6 +23,7 @@ urlpatterns = [
     path("add_to_order/<int:pizza_id>/", views.add_to_order, name="add_to_order"),
     path('logout-and-redirect/', views.LogoutAndRedirect.as_view(), name='logout_and_redirect'),
     path("call/<int:number>/", views.call, name="call"),
+    path("add_promo/", views.add_promo, name="add_promo"),
 
 ]
 
