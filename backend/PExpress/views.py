@@ -218,16 +218,18 @@ class CreateOrderView(View):
 
         try:
             response = requests.get(url, params=params)
-            print(response)
         except Exception as e:
             print(e)
 
         time.sleep(30)
 
         phone_number = request.user.phone
-        campaign_id = "1057814085"
-        public_key = "25ac15841d365a56bc393cb5239e0483"
-        api_url = f"https://zvanok.by/manager/cabapi_external/api/v1/phones/calls_by_phone/?campaign_id={campaign_id}&phone={phone_number}&public_key={public_key}"
+        params_for_get_phone = {
+            "campaign_id": "1057814085",
+            "phone": request.user.phone,
+            "public_key": "25ac15841d365a56bc393cb5239e0483",
+        }
+        api_url = f"https://zvanok.by/manager/cabapi_external/api/v1/phones/calls_by_phone/"
 
         try:
             max_order_id = Order.objects.filter(
@@ -236,54 +238,57 @@ class CreateOrderView(View):
             ).aggregate(Max('id'))['id__max']
 
             try:
-                response = requests.get(api_url)
+                response = requests.get(api_url, params=params_for_get_phone)
                 calls_data = response.json()
-                max_call_entry = max(
-                    filter(lambda x: x["phone"] == phone_number, calls_data),
-                    key=lambda x: x["call_id"]
-                )
 
-                # Check if ivr_data is a string and parse it if needed
+                filtered_calls = filter(lambda x: x["phone"] == phone_number, calls_data)
+                max_call_entry = max(filtered_calls, key=lambda x: x["created"], default=None)
+
                 ivr_data = max_call_entry.get("ivr_data")
                 if ivr_data:
-                    if isinstance(ivr_data, str):
-                        ivr_data = json.loads(ivr_data)
+                    try:
+                        if isinstance(ivr_data, str):
+                            ivr_data = json.loads(ivr_data)
 
-                    button_num = ivr_data[0].get("button_num")
-                    if button_num is not None:
+                        button_num = ivr_data[0]["button_num"]
                         print(f"Button Number: {button_num}")
-                    else:
-                        print("Button Number not found in ivr_data")
+                    except (KeyError, IndexError) as e:
+                        print(f"Error parsing ivr_data: {e}")
+                        button_num = None
                 else:
                     print("ivr_data not present in the response")
+                    button_num = None
 
             except Exception as e:
                 print(f"Error fetching button_num: {e}")
                 button_num = None
 
-            with transaction.atomic():
-                order = Order.objects.select_for_update().get(id=max_order_id)
-                order.status = "В процессе приготовления"
-                order.save()
+            if button_num == 1:
+                with transaction.atomic():
+                    order = Order.objects.select_for_update().get(id=max_order_id)
+                    order.status = "В процессе приготовления"
+                    order.save()
 
-            Order.objects.create(id=max_order_id + 1, user_id=request.user, status="Подтверждение заказа")
+                Order.objects.create(id=max_order_id + 1, user_id=request.user, status="Подтверждение заказа")
 
-            order_items = DishForOrder.objects.filter(order_id=max_order_id)
-            dishes = Dish.objects.filter(id__in=[item.dish_id for item in order_items])
-            dish_names = [dish.pizza_name for dish in dishes]
+                order_items = DishForOrder.objects.filter(order_id=max_order_id)
+                dishes = Dish.objects.filter(id__in=[item.dish_id for item in order_items])
+                dish_names = [dish.pizza_name for dish in dishes]
 
-            payment_method = request.POST.get('payment_method')
+                payment_method = request.POST.get('payment_method')
 
-            total_sum = request.POST.get('total_sum')
-            print(total_sum)
+                total_sum = request.POST.get('total_sum')
+                print(total_sum)
 
-            user = request.user
-            user.promo = None
-            user.save()
-            send_order_confirmation_email.delay(request.user.telegram_id, request.user.email, dish_names,
-                                                payment_method)
+                user = request.user
+                user.promo = None
+                user.save()
+                send_order_confirmation_email.delay(request.user.telegram_id, request.user.email, dish_names,
+                                                    payment_method)
 
-            return redirect('menu')
+                return redirect('menu')
+            else:
+                return redirect('menu')
         except Order.DoesNotExist:
             return redirect('error')
         except Exception as e:
