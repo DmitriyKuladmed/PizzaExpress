@@ -21,13 +21,13 @@ h3 {
 }
 
 .special-pizza {
-    box-shadow: 0 0 15px rgba(0, 0, 255, 0.7);
+    box-shadow: 0 0 15px #FFA07A;
 }
 
 
 .special-pizza:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.7);
-    background-color: #00BFFF;
+    box-shadow: 0 0 20px color: #FF6347;
+    background-color: #FFA07A;
     color: white;
 }
 
@@ -238,10 +238,15 @@ li6 {
   text-align: center;
   letter-spacing: 3px;
   font-weight: 600;
-  color: black;
-  background: #f80;
+  color: white;
+  background: #CD5C5C;
   box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
   transition: .3s;
+}
+
+.floating-button-menu:hover {
+  background: #CD5C5C;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .2);
 }
 
 .popup-overlay {
@@ -307,13 +312,13 @@ li6 {
   text-align: center;
   letter-spacing: 3px;
   font-weight: 600;
-  color: #6495ED;
-  background: black;
+  color: white;
+  background: #FF7F50;
   box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
   transition: .3s;
 }
 .floating-button-detail:hover {
-  background: #6495ED;
+  background: #CD5C5C;
   box-shadow: 0 15px 20px rgba(39, 187, 245, .8);
   color: white;
   transform: translateY(-7px);
@@ -322,13 +327,16 @@ li6 {
 .double-border-button {
   text-decoration: none;
   display: inline-block;
-  padding: 5px 20px;
+  padding: 4px 10px;
   position: relative;
   border: 2px solid #f1c40f;
   color: #f1c40f;
   font-family: 'Montserrat', sans-serif;
   transition: .4s;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
+
 .double-border-button:after {
   content: "";
   position: absolute;
@@ -336,7 +344,7 @@ li6 {
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
+  width: 80%;
   height: 100%;
   margin: auto;
   border: 2px solid rgba(0, 0, 0, 0);
@@ -347,3 +355,21 @@ li6 {
   width: calc(100% - 10px);
   height: calc(100% + 10px);
 }
+
+.pizza-detail-container {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid #FF7F50;
+  box-shadow: 0 0 10px #FF7F50;
+  padding: 10px;
+  height: 350px;
+}
+
+.pizza-image {
+  margin-left: 10%;
+}
+
+.pizza-details {
+  flex-grow: 1;
+}
+

@@ -5,3 +5,45 @@
 {"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
 {"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
 {"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy used their promo code!"}
+{"status": 200, "message": "User Alex_Vasilevskiy used their promo code!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy used their promo code!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 300, "message": "User Alex_Vasilevskiy canceled his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy used their promo code!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "Order for user Alex_Vasilevskiy completed!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy used their promo code!"}
+{"status": 200, "message": "User Alex_Vasilevskiy made his order!"}
+{"status": 200, "message": "User Alex_Vasilevskiy added a new pizza to the order!"}
+{"status": 400, "message": "The user Alex_Vasilevskiy entered the wrong promotional code or has already received it!"}

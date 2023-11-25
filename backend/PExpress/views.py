@@ -246,11 +246,11 @@ class CreateOrderView(View):
         }
 
         try:
-            response = requests.get(url, params=params)
+            requests.get(url, params=params)
         except Exception as e:
             print(e)
 
-        time.sleep(30)
+        time.sleep(40)
 
         phone_number = request.user.phone
         params_for_get_phone = {
@@ -305,9 +305,6 @@ class CreateOrderView(View):
                 dish_names = [dish.pizza_name for dish in dishes]
 
                 payment_method = request.POST.get('payment_method')
-
-                total_sum = request.POST.get('total_sum')
-                print(total_sum)
 
                 user = request.user
                 user.promo = None

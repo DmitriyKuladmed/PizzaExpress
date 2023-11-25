@@ -1,46 +1,49 @@
 {% extends "basis/base.html" %}
 
 {% block body %}
-    <div class="container text-center" style="background-color: lightblue; box-shadow: 0 0 5px lightblue;">
-        <h1 style='text-align: center; display: inline-block; padding: 5px; color: #f80;'>
+    <br><br>
+    <div class="container text-center" style="box-shadow: 0 0 20px #FF6347;">
+        <h1 style='text-align: center; display: inline-block; padding: 5px; color: #FF6347'>
             Ваш аккаунт
         </h1><br>
-        <strong style="color: #f80">Пользователь: {{ user }} </strong><br>
-        <strong style="color: #f80">Ваш Email: {{ user.email }}</strong><br><br><br>
+        <strong style="color: #FF6347">Пользователь: {{ user }} </strong><br>
+        <strong style="color: #FF6347">Email: {{ user.email }}</strong><br><br><br>
 
-        <h2 style='text-align: center; display: inline-block; padding: 5px; color: #f80;'>
-            Ваши заказы
-        </h2>
-        {% if user_orders %}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Название пиццы</th>
-                        <th>Курьер</th>
-                        <th>Статус</th>
-                        <th>Подтверждение</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in user_orders %}
+        <div style="background-color: #dcdcdc; padding: 10px;">
+            <h2 style='text-align: center; display: inline-block; padding: 5px; color: #FF6347;'>
+                Ваши заказы
+            </h2>
+            {% if user_orders %}
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                {% for dish_name in order.dish_names %}
-                                    {{ dish_name }}
-                                    {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </td>
-                            <td>{{ order.courier|default:"Нет курьера" }}</td>
-                            <td>{{ order.status }}</td>
-                            <td>
-                                {% if order.status == "Курьер на месте!" %}
-                                    <a href="{% url 'remove' order.id %}" class="floating-button-menu">Заказ получен✔</a>
-                                {% endif %}
-                            </td>
+                            <th>Название пиццы</th>
+                            <th>Курьер</th>
+                            <th>Статус</th>
+                            <th>Подтверждение</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for order in user_orders %}
+                            <tr>
+                                <td>
+                                    {% for dish_name in order.dish_names %}
+                                        {{ dish_name }}
+                                        {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ order.courier|default:"Нет курьера" }}</td>
+                                <td>{{ order.status }}</td>
+                                <td>
+                                    {% if order.status == "Курьер на месте!" %}
+                                        <a href="{% url 'remove' order.id %}" class="floating-button-menu">Заказ получен✔</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
             <p>У вас нет заказов.</p>
         {% endif %}

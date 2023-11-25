@@ -91,13 +91,13 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "https://66c5-178-120-11-142.ngrok-free.app",
+    "https://dc43-178-120-12-78.ngrok-free.app",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://66c5-178-120-11-142.ngrok-free.app",
+    "https://dc43-178-120-12-78.ngrok-free.app",
 ]
 
 CSRF_COOKIE_SECURE = False

@@ -4,116 +4,144 @@
 
 {% block body %}
     {% if data_with_promo %}
-        <h3 class="text-center" style="color: #f80">Ваш заказ:</h3><br>
-        <div class="row justify-content-center">
-            {% for pizza in data_with_promo.pizzas %}
-                <div class="col-md-3 mb-4 text-center">
-                    <img src="{{ pizza.photo_url }}" alt="{{ pizza.pizza_name }}" width="100" height="100">
-                    <h4>{{ pizza.pizza_name }}</h4>
-                    <h6>Цена: {{ pizza.promo_price }} руб.</h6>
-                    <h6>Вес: {{ pizza.weight }}</h6>
+                        <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div style="box-shadow: 0 0 20px #FF6347;">
+                <h3 class="text-center" style="color: #FF6347">Ваш заказ:</h3>
+                <br>
+                <div class="row justify-content-center">
+                    {% for pizza in data_with_promo.pizzas %}
+                        <div class="col-md-4 mb-4 text-center">
+                            <img src="{{ pizza.photo_url }}" alt="{{ pizza.pizza_name }}" width="100" height="100">
+                            <h4>{{ pizza.pizza_name }}</h4>
+                            <h6>Цена: {{ pizza.promo_price }} руб.</h6>
+                            <h6>Вес: {{ pizza.weight }}</h6>
+                        </div>
+                        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                            </div><div class="row justify-content-center">
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                    </div><div class="row justify-content-center">
-                {% endif %}
-            {% endfor %}
-        </div>
-        <hr>
-        <h5 style="text-align: center">
-            Общая сумма заказа: {{ data_with_promo.total_sum }} руб.
-        </h5>
-        <hr>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form method="post" action="{% url 'add_promo' %}" class="form-group text-center">
-                    {% csrf_token %}
-                    <label for="promo_code" style="display: inline-block; margin-right: 5px;">Ваш промокод:</label>
-                    <input type="text" class="form-control" id="promo_code" name="promo_code" style="width: 10em; display: inline-block;">
-                    <button type="submit" class="double-border-button">Использовать!</button>
-                </form>
             </div>
         </div>
-        <div class="text-center">
-            <h3 style="color: #f80">Выберите способ оплаты:</h3>
-            <form method="post" action="{% url 'create_order' %}" class="d-inline-block">
-                {% csrf_token %}
-                <input type="hidden" name="total_sum" value="{{ data_with_promo.total_sum }}">
-                <div class="form-check form-check-inline">
-                    {{ payment_form.payment_method.0 }}
-                    <label class="form-check-label"></label>
+        <div class="col-md-6" style="background-color: #dcdcdc; width: 30%; box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);">
+            <div style="padding: 20px;">
+                <hr>
+                <h5 style="text-align: center"><u>
+                    Общая сумма заказа: {{ data_with_promo.total_sum }} руб.
+                </u></h5>
+                <hr>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form method="post" action="{% url 'add_promo' %}" class="form-group text-center">
+                            {% csrf_token %}
+                            <label for="promo_code" style="display: inline-block; margin-right: 5px;"><b>Ваш промокод:</b></label>
+                            <input type="text" class="form-control" id="promo_code" name="promo_code" style="width: 10em; display: inline-block;">
+                            <button type="submit" class="double-border-button">Использовать!</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    {{ payment_form.payment_method.1 }}
-                    <label class="form-check-label"></label>
+                <div class="text-center"><br>
+                    <h5 style="color: #f80">Выберите способ оплаты:</h5>
+                    <form method="post" action="{% url 'create_order' %}" class="d-inline-block">
+                        {% csrf_token %}
+                        <div class="form-check form-check-inline">
+                            {{ payment_form.payment_method.0 }}
+                            <label class="form-check-label"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {{ payment_form.payment_method.1 }}
+                            <label class="form-check-label"></label>
+                        </div>
+                        <br><br>
+                        <h6 style="color: #FF0000">Вам позвонит наш администратор для подтверждения заказа.</h6>
+                        <button class="floating-button-success" type="submit">Сделать заказ</button>
+                        <style>
+                            .floating-button-success {
+                                border-radius: 10px;
+                                background-color: #FFA500;
+                                color: #000000;
+                                padding: 5px 20px;
+                                cursor: pointer;
+                            }
+                        </style>
+                    </form>
                 </div>
-                <br><br>
-                <button class="floating-button-success" type="submit">Сделать заказ</button>
-                <style>
-                    .floating-button-success {
-                        border-radius: 10px;
-                        background-color: #FFA500;
-                        color: #000000;
-                        padding: 5px 20px;
-                        cursor: pointer;
-                    }
-                </style>
-            </form>
+            </div>
         </div>
+    </div>
+</div>
     {% elif order_data.dishes %}
-        <h3 class="text-center" style="color: #f80">Ваш заказ:</h3><br>
-        <div class="row justify-content-center">
-            {% for dish in order_data.dishes %}
-                <div class="col-md-3 mb-4 text-center">
-                    <img src="{{ dish.photo.url }}" alt="{{ dish.pizza_name }}" width="100" height="100">
-                    <h4>{{ dish.pizza_name }}</h4>
-                    <h6>Цена: {{ dish.price }} руб.</h6>
-                    <h6>Вес: {{ dish.weight }}</h6>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div style="box-shadow: 0 0 20px #FF6347;">
+                    <h3 class="text-center" style="color: #FF6347">Ваш заказ:</h3>
+                    <br>
+                    <div class="row justify-content-center">
+                        {% for dish in order_data.dishes %}
+                            <div class="col-md-4 mb-4 text-center">
+                                <img src="{{ dish.photo.url }}" alt="{{ dish.pizza_name }}" width="100" height="100">
+                                <h4>{{ dish.pizza_name }}</h4>
+                                <h6>Цена: {{ dish.price }} руб.</h6>
+                                <h6>Вес: {{ dish.weight }}</h6>
+                            </div>
+                            {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                                </div><div class="row justify-content-center">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
                 </div>
-                {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                    </div><div class="row justify-content-center">
-                {% endif %}
-            {% endfor %}
-        </div><hr>
-        <h5 style="text-align: center">
-            Общая сумма заказа: {{ order_data.total_sum }} руб.
-        </h5>
-        <hr>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form method="post" action="{% url 'add_promo' %}" class="form-group text-center">
-                    {% csrf_token %}
-                    <label for="promo_code" style="display: inline-block; margin-right: 5px;">Ваш промокод:</label>
-                    <input type="text" class="form-control" id="promo_code" name="promo_code" style="width: 10em; display: inline-block;">
-                    <button type="submit" class="double-border-button">Использовать!</button>
-                </form>
+                <div class="col-md-6" style="background-color: #dcdcdc; width: 30%;box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);">
+                    <div style="padding: 20px;">
+                        <hr>
+                        <h5 style="text-align: center"><u>
+                            Общая сумма заказа: {{ order_data.total_sum }} руб.
+                        </u></h5>
+                        <hr>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <form method="post" action="{% url 'add_promo' %}" class="form-group text-center">
+                                    {% csrf_token %}
+                                    <label for="promo_code" style="display: inline-block; margin-right: 5px;"><b>Ваш промокод:</b></label>
+                                    <input type="text" class="form-control" id="promo_code" name="promo_code" style="width: 10em; display: inline-block;">
+                                    <button type="submit" class="double-border-button">Использовать!</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="text-center"><br>
+                            <h5 style="color: #f80">Выберите способ оплаты:</h5>
+                            <form method="post" action="{% url 'create_order' %}" class="d-inline-block">
+                                {% csrf_token %}
+                                <div class="form-check form-check-inline">
+                                    {{ payment_form.payment_method.0 }}
+                                    <label class="form-check-label"></label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    {{ payment_form.payment_method.1 }}
+                                    <label class="form-check-label"></label>
+                                </div>
+                                <br><br>
+                                <h6 style="color: #FF0000">Вам позвонит наш администратор для подтверждения заказа.</h6>
+                                <button class="floating-button-success" type="submit">Сделать заказ</button>
+                                <style>
+                                    .floating-button-success {
+                                        border-radius: 10px;
+                                        background-color: #FFA500;
+                                        color: #000000;
+                                        padding: 5px 20px;
+                                        cursor: pointer;
+                                    }
+                                </style>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="text-center">
-            <h3 style="color: #f80">Выберите способ оплаты:</h3>
-            <form method="post" action="{% url 'create_order' %}" class="d-inline-block">
-                {% csrf_token %}
-                <div class="form-check form-check-inline">
-                    {{ payment_form.payment_method.0 }}
-                    <label class="form-check-label"></label>
-                </div>
-                <div class="form-check form-check-inline">
-                    {{ payment_form.payment_method.1 }}
-                    <label class="form-check-label"></label>
-                </div>
-                <br><br>
-                <button class="floating-button-success" type="submit">Сделать заказ</button>
-                <style>
-                    .floating-button-success {
-                        border-radius: 10px;
-                        background-color: #FFA500;
-                        color: #000000;
-                        padding: 5px 20px;
-                        cursor: pointer;
-                    }
-                </style>
-            </form>
         </div>
     {% else %}
-        <h3 class="text-center">Вы еще ничего не заказали :(</h3>
+        <h3 class="text-center" style="color: #FF6347">Вы еще ничего не заказали :(</h3>
     {% endif %}
 {% endblock %}

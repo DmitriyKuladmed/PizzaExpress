@@ -35,13 +35,6 @@ def start_message(message):
         print(f"Пользователь уже есть в базе данных: {chat_id}")
 
 
-@bot.message_handler(commands=['promo'])
-def send_message(message):
-    chat_id = message.chat.id
-    print(chat_id)
-    bot.send_message(chat_id, welcome_message)
-
-
 @csrf_exempt
 def webhook(request):
     if request.method == 'POST':

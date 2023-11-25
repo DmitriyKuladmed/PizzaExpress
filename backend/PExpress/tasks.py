@@ -55,7 +55,6 @@ def give_promo(user_telegram, chat_with_user_id):
     user = User.objects.get(telegram_id=user_telegram)
 
     if not user.promo and user.total_promocodes == 0:
-        print('User promo:', user.promo, 'Promo: ', user.total_promocodes)
         random_promo = Promo.objects.order_by('?').first()
 
         user.promo = random_promo.promo_name
@@ -191,7 +190,7 @@ def update_order_status_on_delivery():
         print(f'Error updating order status on delivery: {e}')
 
 
-@app.task(queue='expectation_status_queue', max_retries=1)
+@app.task(queue='expectation_status_queue')
 def update_order_status_on_delivery_delayed(order_id):
     try:
         with transaction.atomic():

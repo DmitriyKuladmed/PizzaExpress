@@ -1,19 +1,27 @@
 {% extends "basis/base.html" %}
 
 {% block body %}
-    <div class="pizza-detail" style="border: 2px solid #00f; box-shadow: 0 0 10px #00f; padding: 10px; height: 500px;">
+<br>
+    <div class="pizza-detail-container" style="text-align: center;">
+      <br>
+      <div class="pizza-image">
+        <br>
         <img src="{{ pizza.photo.url }}" alt="{{ pizza.pizza_name }}" />
-        <h1>{{ pizza.pizza_name }}</h1>
-        <h5>Цена: {{ pizza.price }} руб.</h5>
-        <h5>Вес: {{ pizza.weight }}</h5>
+      </div>
+      <div class="pizza-details">
+        <br>
+        <h1 style="color: #FF7F50"><u>Пицца: {{ pizza.pizza_name }}</u></h1>
+        <h5 style="color: #FF7F50">Цена: {{ pizza.price }} руб.</h5>
+        <h5 style="color: #FF7F50">Вес: {{ pizza.weight }}</h5>
 
-        <h3 style="color: #f80">Ингредиенты:</h3>
+        <h3 style="color: #FF7F50">Ингредиенты:</h3>
         <ul>
-            {% if ingredients %}
-                <h5>{{ ingredients.ingredient_name }}</h5>
-            {% endif %}
+          {% if ingredients %}
+            <h5 style="color: #FF7F50">{{ ingredients.ingredient_name }}</h5>
+          {% endif %}
         </ul>
-
-        <br><a href="{% url 'add_to_order' pizza.id %}" class="floating-button-detail">Добавить в заказ</a>
+        <br>
+        <a href="{% url 'add_to_order' pizza.id %}" class="floating-button-detail">Добавить в заказ</a>
+      </div>
     </div>
 {% endblock %}
